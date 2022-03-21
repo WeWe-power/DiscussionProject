@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+
+{% load i18n %}
+{% block content %}
+    <main class="auth layout">
+        <div class="container">
+            <div class="layout__box">
+                <div class="layout__boxHeader">
+                    <div class="layout__boxTitle">
+                        <h3>Login</h3>
+                    </div>
+                </div>
+                <div class="layout__body">
+                    <form class="login" method="POST">
+                        {% csrf_token %}
+                        <div class="form__group">
+                            {% for field in form %}
+                                <p>{{ field.label }}:</p>
+                                <p>{{ field }}</p>
+                                <br>
+                            {% endfor %}
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}"
+                                       value="{{ redirect_field_value }}"/>
+                            {% endif %}
+                            {{ form.non_field_errors }}
+                        </div>
+                        <div class="flex-block">
+                            <a href="#">{% trans "Forgot Password?" %}</a>
+                            <button class="btn btn--main btn--right" type="submit">{% trans "Login" %}</button>
+                        </div>
+                    </form>
+                    <p>If you have not created an account yet, then please
+                        <a href="{% url 'account_signup' %}">sign up</a> first.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

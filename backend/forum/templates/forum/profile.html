@@ -1,0 +1,60 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="profile-page layout layout--3">
+        <div class="container">
+            <!-- Topics Start -->
+            {% include 'forum/topics_component.html' %}
+            <!-- Topics End -->
+
+            <!-- Room List Start -->
+            <div class="roomList">
+                <div class="profile">
+                    <div class="profile__avatar">
+                        <div class="avatar avatar--large active">
+                            {% if user.avatar %}
+                                <img src="{{ user.avatar.url }}"/>
+                            {% else %}
+                                <img src="{% static 'assets/avatar.svg' %}"/>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="profile__info">
+                        <span>{{ user.name }}</span>
+                        <p>@{{ user.username }}</p>
+                        {% if request.user == user %}
+                            <a href="{% url 'profile_update' user.id %}" class="btn btn--main btn--pill">Edit Profile</a>
+                        {% endif %}
+                    </div>
+                    <div class="profile__about">
+                        <h3>About</h3>
+                        <p>
+                            {% if user.bio %}
+                                {{ user.bio }}
+                            {% else %}
+                                <p>User has not created(or deleted) his bio :(</p>
+                            {% endif %}
+
+                        </p>
+                    </div>
+                </div>
+
+                <div class="roomList__header">
+                    <div>
+                        <h2>Rooms hosted by {{ user.username }} ({{ rooms|length }} items)
+                        </h2>
+                    </div>
+                </div>
+                {% include 'forum/feed_component.html' %}
+
+
+            </div>
+            <!-- Room List End -->
+
+            <!-- Activities Start -->
+            {% include 'forum/activity_component.html' %}
+            <!-- Activities End -->
+        </div>
+    </main>
+{% endblock content %}

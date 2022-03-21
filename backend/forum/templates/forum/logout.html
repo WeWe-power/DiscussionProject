@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+    <main class="auth layout">
+        <div class="container">
+            <div class="layout__box">
+                <div class="layout__body">
+                    <div class="exit">
+                        <img src="{% static 'assets/exit.svg' %}"/>
+                    </div>
+                    <div class="exit-text">
+                        <h1>You are leaving...Are you sure?</h1>
+                    </div>
+                    <form method="post" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                        {% endif %}
+                        <div class="block-center">
+                            <a href="{% url 'account_logout_c' %}">
+                                <button class="btn btn--main" type='button'>{% trans 'Sign Out' %}</button>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

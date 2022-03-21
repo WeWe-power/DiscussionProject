@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+    <main class="auth layout">
+        <div class="container">
+            <div class="layout__box">
+                <div class="layout__boxHeader">
+                    <div class="layout__boxTitle">
+                        <h3>Sign Up</h3>
+                    </div>
+                </div>
+                <div class="layout__body">
+                    <div class="form__group">
+                        <form class="signup" id="signup_form" method="post">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <p>{{ field.label }}:</p>
+                                <p>{{ field }}</p>
+                                {{ field.errors }}
+                                {{ form.non_field_errors }}
+                                <br>
+                            {% endfor %}
+                            <button class="btn btn--main" type="submit">{% trans "Sign Up" %}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

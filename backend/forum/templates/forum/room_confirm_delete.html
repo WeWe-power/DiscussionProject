@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+    <main class="auth layout">
+        <div class="container">
+            <div class="layout__box">
+                <div class="layout__body">
+                    <div class="delete-room">
+                        <h1>Do u really want to delete this room?</h1>
+                    </div>
+                    {%  include 'forum/feed_component.html'%}
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                        {% endif %}
+                        <div class="block-center">
+                            <a href="{% url 'room_delete' room.id %}">
+                                <button class="btn btn--main btn-exit" type='submit'>{% trans 'Confirm' %}</button>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
